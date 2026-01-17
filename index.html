@@ -931,4 +931,216 @@
             document.getElementById('artifactCounter').textContent = collectedArtifacts;
         }
 
-        function activateDet
+        function activateDetector() {
+            const beepCount = Math.floor(Math.random() * 5) + 2;
+            let beeps = '';
+            
+            for (let i = 0; i < beepCount; i++) {
+                beeps += 'бип ';
+            }
+            
+            const hasArtifact = Math.random() > 0.3;
+            const message = hasArtifact 
+                ? `Детектор обнаружил аномалию! ${beeps} Возможно, рядом есть артефакт.`
+                : `Детектор активен. ${beeps} Аномалий не обнаружено.`;
+            
+            showNotification(message, 4000);
+            
+            // Визуальный эффект
+            const detectorBtn = document.getElementById('detectorBtn');
+            detectorBtn.style.animation = 'none';
+            setTimeout(() => {
+                detectorBtn.style.animation = 'pulse 0.5s';
+            }, 10);
+        }
+
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').style.display = 'flex';
+            startCountdown();
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').style.display = 'none';
+            cancelEmergency();
+        }
+
+        function cancelEmergency() {
+            if (emergencyCountdown) {
+                clearInterval(emergencyCountdown);
+                emergencyCountdown = null;
+            }
+        }
+
+        function startCountdown() {
+            let seconds = 60;
+            const countdownElement = document.getElementById('countdown');
+            
+            emergencyCountdown = setInterval(() => {
+                seconds--;
+                countdownElement.textContent = seconds;
+                
+                if (seconds <= 10) {
+                    countdownElement.style.color = '#e74c3c';
+                    countdownElement.style.animation = seconds % 2 === 0 ? 'none' : 'pulse 0.5s';
+                }
+                
+                if (seconds <= 0) {
+                    clearInterval(emergencyCountdown);
+                    showNotification("🚁 Помощь уже в пути! Держитесь, сталкер!", 5000);
+                    document.getElementById('emergencyModal').style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        function toggleRadio() {
+            radioActive = !radioActive;
+            const radioBtn = document.getElementById('radioBtn');
+            radioBtn.textContent = radioActive ? '📻 Рация (ВКЛ)' : '📻 Рация (ВЫКЛ)';
+            radioBtn.classList.toggle('secondary', !radioActive);
+            radioBtn.classList.toggle('tertiary', radioActive);
+            
+            const messages = [
+                "База, база, я сталкер, прием...",
+                "Шумит... помехи...",
+                "Всем свободным сталкерам... осторожно... кровососы...",
+                "Кто на связи?",
+                "Продаю артефакты, недорого...",
+                "Вижу странное свечение на северо-западе..."
+            ];
+            
+            if (radioActive) {
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                showNotification(`📻 Рация: "${randomMessage}"`, 4000);
+            }
+        }
+
+        function handleStalkerMenu(action) {
+            const actions = {
+                mapBtn: () => showModal("Карта Зоны", "<p>🗺️ Загрузка карты...</p><p>Вы находитесь в районе: <strong>Агропром</strong></p><p>Ближайшие точки интереса:</p><ul><li>⚫ Аномалия 'Жарка' (2 км)</li><li>⚫ База 'Свободы' (5 км)</li><li>⚫ Заброшенный завод (3 км)</li></ul>"),
+                tradeBtn: () => showModal("Торговля", "<p>💰 Доступные торговцы:</p><ul><li>🛒 Сидорович (Кордон) - общее снаряжение</li><li>🛒 Бармен (Стоянка) - информация, задания</li><li>🛒 Сахаров (Янтарь) - научное оборудование</li><li>🛒 Петренко (Военные склады) - оружие</li></ul><p>💳 Ваш баланс: <strong>12,450 руб.</strong></p>"),
+                factionBtn: () => showModal("Фракции", "<p>⚔️ Основные фракции Зоны:</p><ul><li>🎯 Долг - защита от Зоны</li><li>☮️ Свобода - изучение Зоны</li><li>💼 Наемники - деньги решают всё</li><li>🔬 Ученые - исследование аномалий</li><li>☢️ Монолит - религиозные фанатики</li><li>🏴‍☠️ Бандиты - выживают сильнейшие</li></ul>"),
+                anomalyBtn: () => showModal("Аномалии", "<p>⚠️ Известные типы аномалий:</p><ul><li>🔥 'Жарка' - термическая</li><li>⚡ 'Электра' - электромагнитная</li><li>🌀 'Воронка' - гравитационная</li><li>☢️ 'Радиант' - радиационная</li><li>🍃 'Газировка' - химическая</li><li>👻 'Призрак' - пси-аномалия</li></ul><p>⚠️ <strong>Осторожно:</strong> Аномалии смертельно опасны!</p>"),
+                saveGameBtn: () => {
+                    showNotification("💾 Игра сохранена успешно!", 2000);
+                    const date = new Date();
+                    const timeString = date.toLocaleTimeString();
+                    showModal("Сохранение игры", `<p>Игра сохранена в ${timeString}</p><p>Слот сохранения: <strong>Автосохранение</strong></p><p>Всего сохранений: <strong>7</strong></p>`);
+                }
+            };
+            
+            if (actions[action]) {
+                actions[action]();
+            }
+        }
+
+        function showTipDetails(tipNumber) {
+            const tips = [
+                "Используйте разные типы детекторов для разных артефактов. 'Медведь' лучше находит химические артефакты, 'Велес' - электромагнитные, а 'Сварог' - все типы, но имеет меньший радиус действия.",
+                "Перед входом в аномалию всегда проверяйте защиту. Комбинезон + противогаз + артефакт 'Кровь камня' для химических аномалий. Для электромагнитных - 'Пустышка' или специальный костюм.",
+                "Контейнеры бывают разных типов: стандартные (для большинства артефактов), свинцовые (для радиоактивных) и герметичные (для химических). Неправильное хранение может привести к утечке радиации."
+            ];
+            
+            showModal(`Совет ${tipNumber}`, `<p>${tips[tipNumber - 1]}</p>`);
+        }
+
+        function changeQuote() {
+            const randomQuote = stalkerQuotes[Math.floor(Math.random() * stalkerQuotes.length)];
+            document.getElementById('randomQuote').textContent = `"${randomQuote}"`;
+        }
+
+        function showArtifactDetails(id) {
+            const artifact = artifacts.find(a => a.id == id);
+            if (!artifact) return;
+            
+            const content = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 4em; margin-bottom: 10px;">${getArtifactIcon(artifact.type)}</div>
+                    <h3 style="color: #e74c3c;">${artifact.name}</h3>
+                </div>
+                <p><strong>Тип:</strong> ${artifact.type}</p>
+                <p><strong>Эффекты:</strong> ${artifact.effects}</p>
+                <p><strong>Описание:</strong> ${artifact.description}</p>
+                <p><strong>Местонахождение:</strong> ${artifact.location}</p>
+                <p><strong>Радиация:</strong> ${artifact.radiation}</p>
+                <p><strong>Вес:</strong> ${artifact.weight}</p>
+                <p><strong>Цена:</strong> ${artifact.price}</p>
+                <p><strong>Уровень опасности:</strong> <span class="danger-level ${artifact.danger}">${getDangerText(artifact.danger)}</span></p>
+                <div style="margin-top: 20px;">
+                    <button class="clickable-button" onclick="simulateArtifactUse(${artifact.id})" style="width: 100%;">
+                        🧪 Использовать артефакт
+                    </button>
+                </div>
+            `;
+            
+            showModal(artifact.name, content);
+        }
+
+        function simulateArtifactUse(id) {
+            const artifact = artifacts.find(a => a.id == id);
+            const effects = [
+                `Вы используете ${artifact.name}. Чувствуете прилив энергии!`,
+                `${artifact.name} активирован. Эффект: ${artifact.effects}`,
+                `Артефакт излучает ${artifact.radiation.toLowerCase()} радиацию. Будьте осторожны!`,
+                `Использование ${artifact.name} прошло успешно. Параметры улучшены.`
+            ];
+            
+            const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+            showNotification(randomEffect, 3000);
+            closeModal();
+        }
+
+        function showModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('artifactModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('artifactModal').style.display = 'none';
+        }
+
+        function showNotification(message, duration = 3000) {
+            const notification = document.getElementById('notification');
+            const text = document.getElementById('notificationText');
+            
+            text.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, duration);
+        }
+
+        // Вспомогательные функции
+        function getDangerText(level) {
+            switch(level) {
+                case 'low': return 'Низкий риск';
+                case 'medium': return 'Средний риск';
+                case 'high': return 'Высокий риск';
+                default: return 'Неизвестно';
+            }
+        }
+
+        function getArtifactIcon(type) {
+            if (type.includes('Электр')) return '⚡';
+            if (type.includes('Гравит')) return '🌀';
+            if (type.includes('Химич')) return '🧪';
+            if (type.includes('Биохим')) return '🔬';
+            if (type.includes('Радио')) return '☢️';
+            if (type.includes('Пси')) return '👁️';
+            return '💎';
+        }
+
+        // Добавляем стиль для анимации пульса
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
