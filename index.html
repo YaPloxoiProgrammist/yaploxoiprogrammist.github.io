@@ -92,6 +92,8 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            cursor: pointer;
+            position: relative;
         }
         
         .artifact-card:hover {
@@ -108,6 +110,11 @@
             border-radius: 5px;
             background: rgba(0, 0, 0, 0.3);
             padding: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .artifact-card:hover .artifact-image {
+            transform: scale(1.05);
         }
         
         .artifact-name {
@@ -169,6 +176,12 @@
             font-size: 0.8em;
             margin-top: 10px;
             font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .danger-level:hover {
+            transform: scale(1.1);
         }
         
         .low { background: #27ae60; }
@@ -187,6 +200,13 @@
             padding: 20px;
             border-radius: 8px;
             border-left: 3px solid #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tip-card:hover {
+            background: rgba(41, 128, 185, 0.4);
+            transform: translateX(5px);
         }
         
         .tip-card h3 {
@@ -209,6 +229,15 @@
             color: #f39c12;
             margin: 15px 0;
             font-size: 1.1em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .stalker-quote:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
         }
         
         .image-placeholder {
@@ -223,6 +252,13 @@
             color: #bdc3c7;
             font-style: italic;
             border: 1px dashed #7f8c8d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-placeholder:hover {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            border-color: #3498db;
         }
         
         @media (max-width: 768px) {
@@ -262,123 +298,447 @@
         .artifact-card:nth-child(4) { animation-delay: 0.4s; }
         .artifact-card:nth-child(5) { animation-delay: 0.5s; }
         .artifact-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Новые элементы */
+        .interactive-panel {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid #7f8c8d;
+        }
+        
+        .clickable-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        .clickable-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .clickable-button.secondary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+        
+        .clickable-button.secondary:hover {
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .clickable-button.tertiary {
+            background: linear-gradient(45deg, #27ae60, #219653);
+        }
+        
+        .clickable-button.tertiary:hover {
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(44, 62, 80, 0.95);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #7f8c8d;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            color: #ecf0f1;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s ease;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .dropdown-content a:hover {
+            background: rgba(231, 76, 60, 0.2);
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #2c3e50, #1a2a3a);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid #e74c3c;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #e74c3c;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #fff;
+        }
+        
+        .counter-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .counter-value {
+            color: #f39c12;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin: 10px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #7f8c8d;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background: #e74c3c;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 100;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
-    <meta name="yandex-verification" content="6fe05055797850cf" />
-    <meta name="google-site-verification" content="YkJOiLcAKK05OOsDbtzVxI3vDdX91lyFHxx4F4cPGFA" />
 </head>
 <body>
     <div class="container">
         <header>
             <h1>АРТЕФАКТЫ ЗОНЫ</h1>
             <p class="subtitle">Аномальные образования, меняющие реальность. Собрано сталкерами для сталкеров.</p>
+            
+            <div class="interactive-panel" style="margin-top: 20px;">
+                <button class="clickable-button" id="randomArtifactBtn">🎲 Случайный артефакт</button>
+                <button class="clickable-button secondary" id="toggleNightVisionBtn">🌙 Ночное зрение</button>
+                <button class="clickable-button tertiary" id="checkGearBtn">🎒 Проверить снаряжение</button>
+                
+                <div class="dropdown">
+                    <button class="clickable-button">📋 Меню сталкера</button>
+                    <div class="dropdown-content">
+                        <a href="#" id="mapBtn">🗺️ Карта Зоны</a>
+                        <a href="#" id="tradeBtn">💰 Торговля</a>
+                        <a href="#" id="factionBtn">⚔️ Фракции</a>
+                        <a href="#" id="anomalyBtn">⚠️ Аномалии</a>
+                        <a href="#" id="saveGameBtn">💾 Сохранить игру</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="counter-display">
+                Найдено артефактов: <span class="counter-value" id="artifactCounter">0</span> / 6
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <button class="clickable-button" id="collectArtifactBtn">🛡️ Собрать артефакт</button>
+            </div>
         </header>
         
         <section class="intro">
             <h2>Что такое артефакты?</h2>
             <p>Артефакты — это уникальные образования, возникающие в аномалиях Зоны. Они обладают необычными свойствами и высоко ценятся как учеными, так и сталкерами. Каждый артефакт требует осторожного обращения и специальных знаний для безопасного извлечения.</p>
             
+            <div style="margin: 20px 0; text-align: center;">
+                <label style="display: inline-block; margin-right: 15px;">
+                    <span style="margin-right: 10px;">🔦 Режим сканирования:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="scanModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </label>
+                
+                <button class="clickable-button secondary" id="detectorBtn">📡 Активировать детектор</button>
+            </div>
+            
             <div class="tips">
-                <div class="tip-card">
+                <div class="tip-card" id="tip1">
                     <h3>Поиск артефактов</h3>
                     <p>Используйте детекторы ("Медведь", "Велес", "Сварог") для обнаружения артефактов в аномалиях.</p>
+                    <p style="font-size: 0.9em; color: #3498db; margin-top: 10px;">🔍 Кликни для подробностей</p>
                 </div>
-                <div class="tip-card">
+                <div class="tip-card" id="tip2">
                     <h3>Безопасность</h3>
                     <p>Никогда не приближайтесь к аномалиям без болта или артефакта, защищающего от их воздействия.</p>
+                    <p style="font-size: 0.9em; color: #3498db; margin-top: 10px;">⚠️ Кликни для проверки защиты</p>
                 </div>
-                <div class="tip-card">
+                <div class="tip-card" id="tip3">
                     <h3>Хранение</h3>
                     <p>Храните артефакты в специальных контейнерах для нейтрализации радиации и других вредных эффектов.</p>
+                    <p style="font-size: 0.9em; color: #3498db; margin-top: 10px;">🧪 Кликни для информации о контейнерах</p>
                 </div>
             </div>
         </section>
         
-        <div class="artifacts-grid">
-            <!-- Артефакт 1 -->
-            <div class="artifact-card">
-                <img src="img/1.jpg" alt="Пустышка" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder1').style.display='flex';">
-                <div class="image-placeholder" id="placeholder1" style="display: none;">Изображение: img/1.jpg</div>
-                <div class="artifact-name">ПУСТЫШКА</div>
-                <div class="artifact-type">Электромагнитный артефакт</div>
-                <div class="artifact-effects">Увеличивает восстановление выносливости</div>
-                <div class="artifact-location">Электро-аномалии</div>
-                <div class="artifact-price">Цена: 18500 руб.</div>
-                <span class="danger-level high">Высокий риск</span>
-            </div>
-            
-            <!-- Артефакт 2 -->
-            <div class="artifact-card">
-                <img src="img/2.jpg" alt="Медуза" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder2').style.display='flex';">
-                <div class="image-placeholder" id="placeholder2" style="display: none;">Изображение: img/2.jpg</div>
-                <div class="artifact-name">МЕДУЗА</div>
-                <div class="artifact-type">Гравитационный артефакт</div>
-                <div class="artifact-effects">Поглощает радиацию</div>
-                <div class="artifact-location">Гравитационные аномалии</div>
-                <div class="artifact-price">Цена: 5000 руб.</div>
-                <span class="danger-level medium">Средний риск</span>
-            </div>
-            
-            <!-- Артефакт 3 -->
-            <div class="artifact-card">
-                <img src="img/3.jpg" alt="Пузырь" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder3').style.display='flex';">
-                <div class="image-placeholder" id="placeholder3" style="display: none;">Изображение: img/3.jpg</div>
-                <div class="artifact-name">ПУЗЫРЬ</div>
-                <div class="artifact-type">Химический артефакт</div>
-                <div class="artifact-effects">Поглощает радиацию</div>
-                <div class="artifact-location">Химические аномалии, газировка</div>
-                <div class="artifact-price">Цена: 20000 руб.</div>
-                <span class="danger-level high">Высокий риск</span>
-            </div>
-            
-            <!-- Артефакт 4 -->
-            <div class="artifact-card">
-                <img src="img/4.jpg" alt="Кровь камня" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder4').style.display='flex';">
-                <div class="image-placeholder" id="placeholder4" style="display: none;">Изображение: img/4.jpg</div>
-                <div class="artifact-name">КРОВЬ КАМНЯ</div>
-                <div class="artifact-type">Биохимический артефакт</div>
-                <div class="artifact-effects">Химическая защита</div>
-                <div class="artifact-location">Химические аномалии, газировка</div>
-                <div class="artifact-price">Цена: 3500 руб.</div>
-                <span class="danger-level medium">Средний риск</span>
-            </div>
-            
-            <!-- Артефакт 5 -->
-            <div class="artifact-card">
-                <img src="img/5.jpg" alt="Ночная звезда" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder5').style.display='flex';">
-                <div class="image-placeholder" id="placeholder5" style="display: none;">Изображение: img/5.jpg</div>
-                <div class="artifact-name">НОЧНАЯ ЗВЕЗДА</div>
-                <div class="artifact-type">Радиоактивный артефакт</div>
-                <div class="artifact-effects">Увеличивает переносимый вес</div>
-                <div class="artifact-location">Радиоактивные зоны</div>
-                <div class="artifact-price">Цена: 5000 руб.</div>
-                <span class="danger-level low">Низкий риск</span>
-            </div>
-            
-            <!-- Артефакт 6 -->
-            <div class="artifact-card">
-                <img src="img/6.jpg" alt="Измененный изолятор" class="artifact-image" onerror="this.style.display='none'; document.getElementById('placeholder6').style.display='flex';">
-                <div class="image-placeholder" id="placeholder6" style="display: none;">Изображение: img/6.jpg</div>
-                <div class="artifact-name">ИЗМЕНЕННЫЙ ИЗОЛЯТОР</div>
-                <div class="artifact-type">Пси-артефакт</div>
-                <div class="artifact-effects">Источник сильного пси-излучения</div>
-                <div class="artifact-location">Неизвестно</div>
-                <div class="artifact-price">Цена: Неизвестно</div>
-                <span class="danger-level high">Смертельный</span>
-            </div>
+        <div class="artifacts-grid" id="artifactsContainer">
+            <!-- Артефакты будут загружены через JS -->
         </div>
         
         <footer>
-            <p class="stalker-quote">"Зона не отпускает тех, кто к ней прикоснулся. Но артефакты стоят риска."</p>
+            <p class="stalker-quote" id="randomQuote">"Зона не отпускает тех, кто к ней прикоснулся. Но артефакты стоят риска."</p>
             <p>© 2024 Сталкерская энциклопедия. Осторожно: Зона опасна для жизни!</p>
             <p>Выживание в Зоне требует опыта и осторожности. Удачи, сталкер!</p>
+            
+            <div style="margin-top: 20px;">
+                <button class="clickable-button" id="emergencyBtn">🚨 Аварийный сигнал</button>
+                <button class="clickable-button secondary" id="radioBtn">📻 Рация (ВКЛ/ВЫКЛ)</button>
+            </div>
         </footer>
+    </div>
+    
+    <!-- Модальные окна -->
+    <div class="modal" id="artifactModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Детали артефакта</h2>
+            <div id="modalContent">
+                <!-- Контент модального окна -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="emergencyModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeEmergencyModal">&times;</span>
+            <h2>🚨 АВАРИЙНЫЙ СИГНАЛ</h2>
+            <p>Вы активировали аварийный сигнал! Ожидайте помощь через:</p>
+            <h1 id="countdown" style="text-align: center; color: #e74c3c; font-size: 3em; margin: 20px 0;">60</h1>
+            <p style="text-align: center;">секунд</p>
+            <button class="clickable-button" id="cancelEmergencyBtn" style="width: 100%; margin-top: 20px;">Отменить сигнал</button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <span id="notificationText">Уведомление</span>
     </div>
 
     <script>
-        // Анимация появления элементов при прокрутке
+        // Данные артефактов
+        const artifacts = [
+            {
+                id: 1,
+                name: "ПУСТЫШКА",
+                type: "Электромагнитный артефакт",
+                effects: "Увеличивает восстановление выносливости",
+                location: "Электро-аномалии",
+                price: "18500 руб.",
+                danger: "high",
+                description: "Редкий электромагнитный артефакт, появляющийся в сильных электромагнитных аномалиях. Повышает регенерацию выносливости носителя на 40%.",
+                radiation: "Средняя",
+                weight: "0.3 кг"
+            },
+            {
+                id: 2,
+                name: "МЕДУЗА",
+                type: "Гравитационный артефакт",
+                effects: "Поглощает радиацию",
+                location: "Гравитационные аномалии",
+                price: "5000 руб.",
+                danger: "medium",
+                description: "Образуется в гравитационных аномалиях. Активно поглощает радиацию, делая её безопасной для носителя.",
+                radiation: "Низкая",
+                weight: "0.5 кг"
+            },
+            {
+                id: 3,
+                name: "ПУЗЫРЬ",
+                type: "Химический артефакт",
+                effects: "Поглощает радиацию",
+                location: "Химические аномалии, газировка",
+                price: "20000 руб.",
+                danger: "high",
+                description: "Опасный химический артефакт из газовых аномалий. Требует особых условий хранения из-за высокой химической активности.",
+                radiation: "Высокая",
+                weight: "0.4 кг"
+            },
+            {
+                id: 4,
+                name: "КРОВЬ КАМНЯ",
+                type: "Биохимический артефакт",
+                effects: "Химическая защита",
+                location: "Химические аномалии, газировка",
+                price: "3500 руб.",
+                danger: "medium",
+                description: "Образуется в местах с высокой химической активностью. Защищает носителя от химических ожогов и отравлений.",
+                radiation: "Средняя",
+                weight: "0.6 кг"
+            },
+            {
+                id: 5,
+                name: "НОЧНАЯ ЗВЕЗДА",
+                type: "Радиоактивный артефакт",
+                effects: "Увеличивает переносимый вес",
+                location: "Радиоактивные зоны",
+                price: "5000 руб.",
+                danger: "low",
+                description: "Светящийся артефакт из радиационных зон. Увеличивает физическую силу носителя, позволяя переносить больше снаряжения.",
+                radiation: "Очень высокая",
+                weight: "0.8 кг"
+            },
+            {
+                id: 6,
+                name: "ИЗМЕНЕННЫЙ ИЗОЛЯТОР",
+                type: "Пси-артефакт",
+                effects: "Источник сильного пси-излучения",
+                location: "Неизвестно",
+                price: "Неизвестно",
+                danger: "high",
+                description: "Загадочный артефакт неизвестного происхождения. Излучает мощные пси-волны. Обращение требует пси-защиты.",
+                radiation: "Экстремальная",
+                weight: "1.2 кг"
+            }
+        ];
+
+        // Цитаты сталкеров
+        const stalkerQuotes = [
+            "Зона не отпускает тех, кто к ней прикоснулся. Но артефакты стоят риска.",
+            "Видел я тварей таких... лучше про них не вспоминать.",
+            "Аномалия - она как женщина: непредсказуемая и опасная.",
+            "Деньги в Зоне - дело десятое. Главное - выжить.",
+            "Детектор пищит - значит, артефакт близко. Или смерть.",
+            "Хороший сталкер тот, кто утром проснулся.",
+            "В Зоне нет друзей, есть только временные союзники.",
+            "Радиация лечит душу, аномалии закаляют характер.",
+            "Не верь никому в Зоне, даже себе.",
+            "Выжил сегодня - молодец. Завтра начнется новая игра."
+        ];
+
+        // Переменные состояния
+        let collectedArtifacts = 0;
+        let nightVision = false;
+        let radioActive = false;
+        let emergencyCountdown = null;
+        let scanMode = false;
+
+        // Инициализация страницы
         document.addEventListener('DOMContentLoaded', function() {
-            const artifactCards = document.querySelectorAll('.artifact-card');
+            initArtifacts();
+            setupEventListeners();
+            showNotification("Добро пожаловать в Зону, сталкер!", 3000);
             
+            // Анимация появления элементов при прокрутке
+            const artifactCards = document.querySelectorAll('.artifact-card');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -391,21 +751,184 @@
             artifactCards.forEach(card => {
                 observer.observe(card);
             });
+        });
+
+        // Инициализация артефактов
+        function initArtifacts() {
+            const container = document.getElementById('artifactsContainer');
+            container.innerHTML = '';
             
-            // Проверка загрузки изображений
-            setTimeout(() => {
-                document.querySelectorAll('.artifact-image').forEach(img => {
-                    if (!img.complete || img.naturalHeight === 0) {
-                        img.style.display = 'none';
-                        const placeholderId = 'placeholder' + img.src.split('/').pop().split('.')[0];
-                        const placeholder = document.getElementById(placeholderId);
-                        if (placeholder) placeholder.style.display = 'flex';
+            artifacts.forEach(artifact => {
+                const card = document.createElement('div');
+                card.className = 'artifact-card';
+                card.dataset.id = artifact.id;
+                
+                card.innerHTML = `
+                    <img src="img/${artifact.id}.jpg" alt="${artifact.name}" class="artifact-image" 
+                         onerror="this.style.display='none'; document.getElementById('placeholder${artifact.id}').style.display='flex';">
+                    <div class="image-placeholder" id="placeholder${artifact.id}" style="display: none;">
+                        <div>
+                            <div style="font-size: 3em;">⚡</div>
+                            <div>${artifact.name}</div>
+                        </div>
+                    </div>
+                    <div class="artifact-name">${artifact.name}</div>
+                    <div class="artifact-type">${artifact.type}</div>
+                    <div class="artifact-effects">${artifact.effects}</div>
+                    <div class="artifact-location">${artifact.location}</div>
+                    <div class="artifact-price">Цена: ${artifact.price}</div>
+                    <span class="danger-level ${artifact.danger}">${getDangerText(artifact.danger)}</span>
+                    <div style="margin-top: 10px;">
+                        <button class="clickable-button" style="width: 100%; font-size: 0.9em; padding: 8px;" data-artifact-id="${artifact.id}">
+                            🔍 Исследовать артефакт
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Обновляем прогресс
+            updateProgress();
+        }
+
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопка случайного артефакта
+            document.getElementById('randomArtifactBtn').addEventListener('click', showRandomArtifact);
+            
+            // Ночное зрение
+            document.getElementById('toggleNightVisionBtn').addEventListener('click', toggleNightVision);
+            
+            // Проверка снаряжения
+            document.getElementById('checkGearBtn').addEventListener('click', checkGear);
+            
+            // Собрать артефакт
+            document.getElementById('collectArtifactBtn').addEventListener('click', collectArtifact);
+            
+            // Активация детектора
+            document.getElementById('detectorBtn').addEventListener('click', activateDetector);
+            
+            // Аварийный сигнал
+            document.getElementById('emergencyBtn').addEventListener('click', showEmergencyModal);
+            
+            // Рация
+            document.getElementById('radioBtn').addEventListener('click', toggleRadio);
+            
+            // Меню сталкера
+            document.querySelectorAll('.dropdown-content a').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const action = this.id;
+                    handleStalkerMenu(action);
+                });
+            });
+            
+            // Советы
+            document.querySelectorAll('.tip-card').forEach((tip, index) => {
+                tip.addEventListener('click', () => showTipDetails(index + 1));
+            });
+            
+            // Цитата
+            document.getElementById('randomQuote').addEventListener('click', changeQuote);
+            
+            // Исследование артефактов
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('[data-artifact-id]')) {
+                    const id = e.target.closest('[data-artifact-id]').dataset.artifactId;
+                    showArtifactDetails(id);
+                }
+                
+                // Клик по карточке артефакта
+                if (e.target.closest('.artifact-card')) {
+                    const card = e.target.closest('.artifact-card');
+                    if (!e.target.closest('button')) {
+                        const id = card.dataset.id;
+                        showArtifactDetails(id);
+                    }
+                }
+            });
+            
+            // Закрытие модальных окон
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('closeEmergencyModal').addEventListener('click', closeEmergencyModal);
+            document.getElementById('cancelEmergencyBtn').addEventListener('click', cancelEmergency);
+            
+            // Тумблер сканирования
+            document.getElementById('scanModeToggle').addEventListener('change', function() {
+                scanMode = this.checked;
+                showNotification(scanMode ? "Режим сканирования активирован" : "Режим сканирования выключен", 2000);
+            });
+            
+            // Клик по фону модального окна
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
                     }
                 });
-            }, 1000);
-        });
-    </script>
-</body>
+            });
+        }
 
-</html>
+        // Функции взаимодействия
+        function showRandomArtifact() {
+            const randomArtifact = artifacts[Math.floor(Math.random() * artifacts.length)];
+            showNotification(`Случайный артефакт: ${randomArtifact.name}`, 3000);
+            showArtifactDetails(randomArtifact.id);
+        }
 
+        function toggleNightVision() {
+            nightVision = !nightVision;
+            document.body.style.filter = nightVision ? 'hue-rotate(90deg) brightness(0.7) contrast(1.2)' : 'none';
+            document.getElementById('toggleNightVisionBtn').textContent = 
+                nightVision ? '☀️ Дневное зрение' : '🌙 Ночное зрение';
+            showNotification(nightVision ? "Ночное зрение активировано" : "Ночное зрение выключено", 2000);
+        }
+
+        function checkGear() {
+            const gearStatus = [
+                "✅ Броня: в норме",
+                "✅ Оружие: заряжено",
+                "✅ Аптечки: 3 шт.",
+                "✅ Противогазы: 2 шт.",
+                "✅ Детектор: готов к работе",
+                radioActive ? "✅ Рация: активна" : "❌ Рация: выключена",
+                nightVision ? "✅ Ночное зрение: активно" : "❌ Ночное зрение: неактивно"
+            ];
+            
+            const modalContent = gearStatus.map(item => `<p>${item}</p>`).join('');
+            showModal("Проверка снаряжения", modalContent);
+        }
+
+        function collectArtifact() {
+            if (collectedArtifacts < artifacts.length) {
+                collectedArtifacts++;
+                updateProgress();
+                
+                const artifactNames = artifacts.map(a => a.name);
+                const randomName = artifactNames[Math.floor(Math.random() * artifactNames.length)];
+                
+                showNotification(`Артефакт "${randomName}" добавлен в коллекцию!`, 3000);
+                
+                // Анимация прогресса
+                const progressFill = document.getElementById('progressFill');
+                const percentage = (collectedArtifacts / artifacts.length) * 100;
+                progressFill.style.width = percentage + '%';
+                
+                // Изменение цвета прогресса в зависимости от количества
+                if (collectedArtifacts === artifacts.length) {
+                    progressFill.style.background = 'linear-gradient(90deg, #27ae60, #2ecc71)';
+                    showNotification("🎉 Поздравляем! Вы собрали все артефакты Зоны!", 5000);
+                } else if (collectedArtifacts >= artifacts.length / 2) {
+                    progressFill.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                }
+            } else {
+                showNotification("Вы уже собрали все артефакты!", 3000);
+            }
+        }
+
+        function updateProgress() {
+            document.getElementById('artifactCounter').textContent = collectedArtifacts;
+        }
+
+        function activateDet
